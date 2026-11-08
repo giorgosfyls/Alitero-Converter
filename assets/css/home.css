@@ -1,0 +1,259 @@
+/* =====================================================================
+   home.css — Styles for index.html only
+   ---------------------------------------------------------------------
+   1. Hero (headline, search box, quick links)
+   2. Category tabs
+   3. Tool grid
+   4. Empty state
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. Hero
+   --------------------------------------------------------------------- */
+.hero {
+  padding: 3.5rem 0 3.25rem;
+  background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 60%, var(--bg-alt) 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-inner {
+  max-width: 62rem;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-border);
+  border-radius: 999px;
+}
+
+.hero-title {
+  margin-bottom: 1.25rem;
+  font-size: clamp(2rem, 6.2vw, 3.9rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+/* Wavy underline under "one place" */
+.wavy {
+  color: var(--brand);
+  text-decoration: underline wavy var(--brand-border);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+
+.hero-lead {
+  max-width: 40rem;
+  margin: 0 auto 2rem;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: var(--muted);
+}
+
+/* Search box */
+.hero-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.hero-search:focus-within {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px var(--brand-soft), var(--shadow);
+}
+
+.hero-search-icon {
+  display: grid;
+  font-size: 1.15rem;
+  color: var(--faint);
+}
+
+.hero-search-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.25rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--heading);
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.hero-search-input::placeholder {
+  color: var(--faint);
+}
+
+/* Quick links to tools that work today */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+}
+
+.chip-label {
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.chip {
+  padding: 0.4rem 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.chip:hover {
+  color: var(--brand);
+  background: var(--brand-soft);
+  border-color: var(--brand-border);
+}
+
+/* ---------------------------------------------------------------------
+   2. Category tabs
+   --------------------------------------------------------------------- */
+.tools-section {
+  padding: 3rem 0 1rem;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.tab:hover {
+  background: var(--bg-alt);
+}
+
+.tab-icon {
+  display: grid;
+  font-size: 0.95rem;
+  color: rgb(var(--tone));
+}
+
+.tab-count {
+  min-width: 1.4rem;
+  padding: 0 0.4rem;
+  font-size: 0.6875rem;
+  line-height: 1.4rem;
+  text-align: center;
+  color: var(--muted);
+  background: var(--bg-alt);
+  border-radius: 999px;
+}
+
+/* Selected tab: inverted colours (dark on light theme, light on dark theme) */
+.tab.is-active {
+  color: var(--bg);
+  background: var(--heading);
+  border-color: var(--heading);
+  box-shadow: var(--shadow);
+}
+.tab.is-active .tab-icon {
+  color: inherit;
+}
+.tab.is-active .tab-count {
+  color: var(--heading);
+  background: var(--bg);
+}
+
+.tools-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 1.5rem;
+  margin: 1.25rem 0 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------------
+   3. Tool grid
+   --------------------------------------------------------------------- */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  gap: 1.25rem;
+}
+
+@media (max-width: 639px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   4. Empty state
+   --------------------------------------------------------------------- */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 3.5rem 1rem;
+  text-align: center;
+}
+
+.no-results h2 {
+  font-size: 1.15rem;
+}
+
+.no-results p {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.no-results-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  font-size: 1.6rem;
+  color: var(--faint);
+  background: var(--bg-alt);
+  border-radius: 50%;
+}

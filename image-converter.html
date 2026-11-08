@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Converter — JPG, PNG, WebP, AVIF, BMP | Alitero.org</title>
+  <meta name="description" content="Convert images between JPG, PNG, WebP, AVIF and BMP for free. Batch conversion, adjustable quality, and your files never leave your device.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="assets/js/core/theme-init.js"></script>
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/tool.css">        <!-- tool pages: drop zone, file list, settings -->
+</head>
+<!-- data-tool tells layout.js which category to highlight in the menu -->
+<body data-page="tool" data-tool="image-converter">
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div id="site-header"></div>
+
+  <main id="main" class="tool-page">
+    <div class="container tool-container">
+
+      <!-- Breadcrumb: Home › Image Tools › Image Converter -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html"><span data-icon="home"></span> Home</a>
+        <span class="breadcrumb-sep" data-icon="chevron-right"></span>
+        <a href="index.html?category=image#tools">Image Tools</a>
+        <span class="breadcrumb-sep" data-icon="chevron-right"></span>
+        <span class="breadcrumb-current" aria-current="page">Image Converter</span>
+      </nav>
+
+      <!-- Tool title card -->
+      <header class="tool-hero">
+        <div class="tool-hero-icon tone-indigo" data-icon="swap"></div>
+        <h1 class="tool-hero-title">Image Converter</h1>
+        <p class="tool-hero-lead">
+          Convert images between JPG, PNG, WebP, AVIF and BMP. Drop in one picture or a whole batch.
+        </p>
+      </header>
+
+      <!-- Messages about skipped files (filled in by the page script) -->
+      <div class="notice" id="notice" role="alert" hidden></div>
+
+      <!-- =======================================================
+           WORKSPACE
+           The whole card is a drop target for files.
+           ======================================================= -->
+      <section class="workspace" id="workspace" aria-label="Image converter workspace">
+
+        <!-- ===== Stage 1: nothing chosen yet ===== -->
+        <div id="stage-upload">
+          <div class="dropzone" id="drop-zone" tabindex="0" role="button"
+               aria-label="Add images: drag and drop, paste, or press Enter to choose files">
+            <span class="dropzone-icon" data-icon="upload-cloud"></span>
+            <p class="dropzone-title">Drag your images here</p>
+            <p class="dropzone-sub">or paste from the clipboard (Ctrl/⌘ + V)</p>
+            <button type="button" class="btn btn-primary btn-lg" id="choose-files">
+              <span data-icon="folder-open"></span> Choose images
+            </button>
+            <p class="dropzone-hint">
+              JPG · PNG · WebP · GIF · BMP · AVIF &nbsp;|&nbsp; up to 20 images, 25 MB each
+            </p>
+          </div>
+        </div>
+
+        <!-- Hidden file picker (opened by the buttons above and below) -->
+        <input type="file" id="file-input" multiple hidden>
+
+        <!-- ===== Stage 2: files chosen ===== -->
+        <div id="stage-ready" hidden>
+
+          <div class="list-head">
+            <h2 class="section-title">Your images <span class="count-pill" id="file-count">0 images</span></h2>
+            <div class="list-head-actions">
+              <button type="button" class="btn btn-secondary btn-sm" id="add-more"><span data-icon="plus"></span> Add more</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="clear-all"><span data-icon="trash"></span> Clear all</button>
+            </div>
+          </div>
+
+          <ul class="file-list" id="file-list"></ul>
+
+          <!-- Settings -->
+          <div class="settings">
+            <h2 class="section-title">Conversion settings</h2>
+
+            <div class="field">
+              <span class="field-label" id="format-label">Convert to</span>
+              <!-- Format buttons are built by the page script -->
+              <div class="format-group" id="format-group" role="radiogroup" aria-labelledby="format-label"></div>
+            </div>
+
+            <div class="settings-row">
+              <!-- Quality: only for JPG, WebP and AVIF -->
+              <div class="field" id="quality-field">
+                <label class="field-label" for="quality">Quality <strong id="quality-value">85%</strong></label>
+                <input type="range" id="quality" class="range" min="10" max="100" step="1" value="85">
+                <p class="field-hint">Lower quality means a smaller file.</p>
+              </div>
+
+              <!-- Background: only for formats without transparency (JPG, BMP) -->
+              <div class="field" id="background-field" hidden>
+                <label class="field-label" for="background">Background colour</label>
+                <div class="color-row">
+                  <input type="color" id="background" class="color-input" value="#ffffff">
+                  <span class="field-hint">Fills transparent areas, because this format cannot store transparency.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress while converting -->
+          <div class="progress-wrap">
+            <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden>
+              <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="progress-text" id="progress-text" aria-live="polite"></p>
+          </div>
+
+          <!-- Main action -->
+          <div class="action-row">
+            <button type="button" class="btn btn-primary btn-lg" id="convert-button" disabled>
+              <span data-icon="zap"></span>
+              <span class="btn-label">Convert</span>
+            </button>
+          </div>
+
+          <!-- Results (shown after converting) -->
+          <div class="results-bar" id="results-bar" hidden>
+            <span class="results-icon" data-icon="check"></span>
+            <div class="results-summary" id="results-summary"></div>
+            <button type="button" class="btn btn-success" id="download-all" hidden>
+              <span data-icon="download"></span> Download all (.zip)
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Privacy reassurance -->
+      <p class="privacy-note"><span data-icon="shield"></span> Your images are converted inside your browser. Nothing is uploaded to a server.</p>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <!-- Shared scripts (same on every page) -->
+  <script src="assets/js/core/utils.js"></script>
+  <script src="assets/js/core/tools-data.js"></script>
+  <script src="assets/js/core/icons.js"></script>
+  <script src="assets/js/core/layout.js"></script>
+  <script src="assets/js/core/theme.js"></script>
+  <script src="assets/js/core/nav.js"></script>
+  <script src="assets/js/core/search-modal.js"></script>
+
+  <!-- Scripts for this tool only -->
+  <script src="assets/js/lib/zip.js"></script>                          <!-- "Download all" ZIP maker -->
+  <script src="assets/js/converters/image-converter.js"></script>       <!-- the conversion engine -->
+  <script src="assets/js/pages/image-converter-page.js"></script>       <!-- this page's buttons and list -->
+</body>
+</html>

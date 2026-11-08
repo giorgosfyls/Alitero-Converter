@@ -1,0 +1,199 @@
+/* =====================================================================
+   contact.css — Styles for contact.html only
+   ---------------------------------------------------------------------
+   1. Page frame and title
+   2. Form fields
+   3. Messages (error and success)
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. Page frame and title
+   --------------------------------------------------------------------- */
+.contact-page {
+  padding: 3rem 0 1rem;
+}
+
+.contact-container {
+  max-width: 40rem;
+}
+
+.contact-head {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.contact-eyebrow {
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contact-title {
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.9rem, 5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.contact-title .accent {
+  color: var(--brand);
+}
+
+.contact-lead {
+  max-width: 32rem;
+  margin: 0 auto;
+  color: var(--muted);
+}
+
+.contact-card {
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 640px) {
+  .contact-card { padding: 2.25rem; }
+}
+
+/* ---------------------------------------------------------------------
+   2. Form fields
+   --------------------------------------------------------------------- */
+.form-field + .form-field {
+  margin-top: 1.25rem;
+}
+
+.form-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.form-counter {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--faint);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--heading);
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+
+.form-input::placeholder {
+  color: var(--faint);
+}
+
+.form-input:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px var(--brand-soft);
+}
+
+/* A field that failed validation */
+.form-input[aria-invalid="true"] {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 4px var(--danger-soft);
+}
+
+textarea.form-input {
+  min-height: 9rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Select with our own chevron instead of the browser's */
+.select-wrap {
+  position: relative;
+}
+
+select.form-input {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.75rem;
+  cursor: pointer;
+}
+
+.select-chevron {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  display: grid;
+  font-size: 0.9rem;
+  color: var(--faint);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------
+   3. Messages
+   --------------------------------------------------------------------- */
+.form-error {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius);
+}
+
+.submit-button {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.success-panel {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+  padding: 1rem 1.15rem;
+  font-size: 0.8125rem;
+  color: var(--text);
+  background: var(--success-soft);
+  border: 1px solid var(--success-soft);
+  border-radius: var(--radius);
+}
+
+.success-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  font-size: 1.05rem;
+  color: #fff;
+  background: #059669;
+  border-radius: 50%;
+}
+
+.success-panel strong {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-size: 0.9375rem;
+  color: var(--heading);
+}
+
+.success-panel a {
+  font-weight: 700;
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

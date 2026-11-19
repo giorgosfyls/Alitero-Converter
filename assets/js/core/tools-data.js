@@ -55,7 +55,7 @@
       keywords: 'pdf compress reduce size smaller optimize'
     },
     {
-      id: 'merge-pdf', category: 'pdf', status: 'soon',
+      id: 'merge-pdf', category: 'pdf', status: 'live', url: 'pdf-merge.html',
       title: 'Merge PDF', tagline: 'Combine several PDFs',
       description: 'Combine two or more PDF files into one organised document, in the order you choose.',
       formats: 'PDF', icon: 'layers', tone: 'purple', badge: 'PDF',

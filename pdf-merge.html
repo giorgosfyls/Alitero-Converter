@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merge PDF — Combine PDF Files Online | Alitero.org</title>
+  <meta name="description" content="Combine several PDF files into one, in the order you choose. Free, fast, and your files never leave your device.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="assets/js/core/theme-init.js"></script>
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/tool.css">        <!-- tool pages: drop zone, file list, settings -->
+  <link rel="stylesheet" href="assets/css/pdf-merge.css">   <!-- this tool: reorderable list -->
+</head>
+<!-- data-tool tells layout.js which category to highlight in the menu -->
+<body data-page="tool" data-tool="merge-pdf">
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div id="site-header"></div>
+
+  <main id="main" class="tool-page">
+    <div class="container tool-container">
+
+      <!-- Breadcrumb: Home › Image Tools › Image Converter -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html"><span data-icon="home"></span> Home</a>
+        <span class="breadcrumb-sep" data-icon="chevron-right"></span>
+        <a href="index.html?category=pdf#tools">PDF Tools</a>
+        <span class="breadcrumb-sep" data-icon="chevron-right"></span>
+        <span class="breadcrumb-current" aria-current="page">Merge PDF</span>
+      </nav>
+
+      <!-- Tool title card -->
+      <header class="tool-hero">
+        <div class="tool-hero-icon tone-purple" data-icon="layers"></div>
+        <h1 class="tool-hero-title">Merge PDF</h1>
+        <p class="tool-hero-lead">
+          Combine two or more PDF files into one document. Drag the files into the order you want.
+        </p>
+      </header>
+
+      <!-- Messages about skipped files (filled in by the page script) -->
+      <div class="notice" id="notice" role="alert" hidden></div>
+
+      <section class="workspace" id="workspace" aria-label="PDF merge workspace">
+
+        <!-- ===== Stage 1: nothing chosen yet ===== -->
+        <div id="stage-upload">
+          <div class="dropzone" id="drop-zone" tabindex="0" role="button"
+               aria-label="Add PDFs: drag and drop, or press Enter to choose files">
+            <span class="dropzone-icon" data-icon="upload-cloud"></span>
+            <p class="dropzone-title">Drag your PDF files here</p>
+            <p class="dropzone-sub">or choose them from your device</p>
+            <button type="button" class="btn btn-primary btn-lg" id="choose-files">
+              <span data-icon="folder-open"></span> Choose PDFs
+            </button>
+            <p class="dropzone-hint">PDF only &nbsp;|&nbsp; up to 30 files, 50 MB each</p>
+          </div>
+        </div>
+
+        <input type="file" id="file-input" accept="application/pdf,.pdf" multiple hidden>
+
+        <!-- ===== Stage 2: files chosen ===== -->
+        <div id="stage-ready" hidden>
+
+          <div class="list-head">
+            <h2 class="section-title">Your PDFs <span class="count-pill" id="file-count">0 files</span></h2>
+            <div class="list-head-actions">
+              <button type="button" class="btn btn-secondary btn-sm" id="add-more"><span data-icon="plus"></span> Add more</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="clear-all"><span data-icon="trash"></span> Clear all</button>
+            </div>
+          </div>
+
+          <p class="order-hint">The files are merged from top to bottom. Drag a row, or use the arrows, to change the order.</p>
+
+          <ul class="file-list" id="file-list"></ul>
+
+          <div class="progress-wrap">
+            <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden>
+              <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="progress-text" id="progress-text" aria-live="polite"></p>
+          </div>
+
+          <div class="action-row">
+            <button type="button" class="btn btn-primary btn-lg" id="merge-button" disabled>
+              <span data-icon="layers"></span>
+              <span class="btn-label">Merge PDFs</span>
+            </button>
+          </div>
+
+          <!-- Result (shown after merging) -->
+          <div class="results-bar" id="results-bar" hidden>
+            <span class="results-icon" data-icon="check"></span>
+            <div class="results-summary" id="results-summary"></div>
+            <a class="btn btn-success" id="download-merged" href="#" download="merged.pdf">
+              <span data-icon="download"></span> Download PDF
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <p class="privacy-note"><span data-icon="shield"></span> Your PDFs are merged inside your browser. Nothing is uploaded to a server.</p>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <!-- Shared scripts (same on every page) -->
+  <script src="assets/js/core/utils.js"></script>
+  <script src="assets/js/core/tools-data.js"></script>
+  <script src="assets/js/core/icons.js"></script>
+  <script src="assets/js/core/layout.js"></script>
+  <script src="assets/js/core/theme.js"></script>
+  <script src="assets/js/core/nav.js"></script>
+  <script src="assets/js/core/search-modal.js"></script>
+
+  <!-- Scripts for this tool only -->
+  <script src="assets/js/lib/vendor/pdf-lib.min.js"></script>           <!-- third-party PDF library (MIT) -->
+  <script src="assets/js/converters/pdf-merge.js"></script>             <!-- the merge engine -->
+  <script src="assets/js/pages/pdf-merge-page.js"></script>             <!-- this page's list and buttons -->
+</body>
+</html>

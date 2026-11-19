@@ -1,0 +1,289 @@
+/* =====================================================================
+   base.css — Colours, reset and typography
+   ---------------------------------------------------------------------
+   Loaded on EVERY page, before all other stylesheets.
+
+   1. Design tokens (CSS variables) for the light theme
+   2. Dark theme: same variable names, different values
+   3. Colour "tones" used for icon boxes
+   4. Reset and base typography
+   5. Small utilities
+
+   To re-colour the whole site, change the variables in sections 1-3.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. Light theme (default)
+   --------------------------------------------------------------------- */
+:root {
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Surfaces */
+  --bg: #f8fafc;              /* page background */
+  --bg-alt: #f1f5f9;          /* subtle panels, hover backgrounds */
+  --surface: #ffffff;         /* cards, header, dropdowns */
+  --header-bg: rgba(255, 255, 255, 0.92);
+
+  /* Text */
+  --text: #334155;            /* normal text */
+  --heading: #0f172a;         /* titles */
+  --muted: #64748b;           /* secondary text */
+  --faint: #94a3b8;           /* hints, placeholders */
+
+  /* Lines */
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  /* Brand (rose / red) */
+  --brand: #e11d48;           /* text and icons in the brand colour */
+  --brand-solid: #e11d48;     /* button backgrounds */
+  --brand-hover: #be123c;
+  --brand-soft: #fff1f2;      /* light tinted backgrounds */
+  --brand-border: #fecdd3;
+  --on-brand: #ffffff;        /* text on top of --brand-solid */
+
+  /* Status colours */
+  --success: #059669;
+  --success-hover: #047857;
+  --success-soft: #d1fae5;
+  --danger: #dc2626;
+  --danger-soft: #fef2f2;
+  --danger-border: #fecaca;
+
+  /* Shape and depth */
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.18);
+  --shadow-lg: 0 24px 60px -20px rgba(15, 23, 42, 0.3);
+
+  --header-h: 72px;
+  --on-tone: #ffffff;         /* icon colour on a filled tone box */
+}
+
+/* ---------------------------------------------------------------------
+   2. Dark theme
+   Applied by theme-init.js / theme.js through <html data-theme="dark">
+   --------------------------------------------------------------------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;         /* dark scrollbars and native form controls */
+
+  --bg: #0a0f1d;
+  --bg-alt: #0f1729;
+  --surface: #111a2e;
+  --header-bg: rgba(10, 15, 29, 0.9);
+
+  --text: #cbd5e1;
+  --heading: #f8fafc;
+  --muted: #94a3b8;
+  --faint: #64748b;
+
+  --border: #1e2a45;
+  --border-strong: #2c3b5e;
+
+  --brand: #fb7185;
+  --brand-solid: #e11d48;
+  --brand-hover: #f43f5e;
+  --brand-soft: rgba(225, 29, 72, 0.14);
+  --brand-border: rgba(251, 113, 133, 0.32);
+
+  --success: #34d399;
+  --success-hover: #10b981;
+  --success-soft: rgba(52, 211, 153, 0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.1);
+  --danger-border: rgba(248, 113, 113, 0.35);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.65);
+  --shadow-lg: 0 24px 60px -20px rgba(0, 0, 0, 0.8);
+
+  --on-tone: #0a0f1d;
+}
+
+/* ---------------------------------------------------------------------
+   3. Colour tones
+   Add class "tone-blue" (etc.) to an element and it gets a --tone colour.
+   Icon boxes then use  rgb(var(--tone) / 0.12)  for the background and
+   rgb(var(--tone))  for the icon. Dark mode uses lighter versions.
+   --------------------------------------------------------------------- */
+.tone-blue    { --tone: 37 99 235; }
+.tone-red     { --tone: 220 38 38; }
+.tone-purple  { --tone: 147 51 234; }
+.tone-amber   { --tone: 217 119 6; }
+.tone-emerald { --tone: 5 150 105; }
+.tone-teal    { --tone: 13 148 136; }
+.tone-indigo  { --tone: 79 70 229; }
+.tone-cyan    { --tone: 8 145 178; }
+.tone-rose    { --tone: 225 29 72; }
+.tone-yellow  { --tone: 202 138 4; }
+.tone-slate   { --tone: 51 65 85; }
+
+:root[data-theme="dark"] .tone-blue    { --tone: 96 165 250; }
+:root[data-theme="dark"] .tone-red     { --tone: 248 113 113; }
+:root[data-theme="dark"] .tone-purple  { --tone: 192 132 252; }
+:root[data-theme="dark"] .tone-amber   { --tone: 251 191 36; }
+:root[data-theme="dark"] .tone-emerald { --tone: 52 211 153; }
+:root[data-theme="dark"] .tone-teal    { --tone: 45 212 191; }
+:root[data-theme="dark"] .tone-indigo  { --tone: 129 140 248; }
+:root[data-theme="dark"] .tone-cyan    { --tone: 34 211 238; }
+:root[data-theme="dark"] .tone-rose    { --tone: 251 113 133; }
+:root[data-theme="dark"] .tone-yellow  { --tone: 250 204 21; }
+:root[data-theme="dark"] .tone-slate   { --tone: 203 213 225; }
+
+/* ---------------------------------------------------------------------
+   4. Reset and base typography
+   --------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1rem); /* anchors stop below the sticky header */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;            /* safety net: never scroll sideways */
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+main {
+  flex: 1;
+}
+
+h1, h2, h3, h4, p, ul, ol, figure {
+  margin: 0;
+}
+
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+
+h1, h2, h3, h4 {
+  color: var(--heading);
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* The HTML "hidden" attribute must always win over component display rules */
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--brand-solid);
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------------
+   5. Utilities
+   --------------------------------------------------------------------- */
+
+/* Centered page column */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container { padding: 0 1.5rem; }
+}
+
+/* Size of every inline icon follows the font-size of its parent */
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+}
+
+/* Hidden visually, still read by screen readers */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* "Skip to content" link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -4rem;
+  left: 1rem;
+  z-index: 300;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  color: var(--on-brand);
+  background: var(--brand-solid);
+  border-radius: var(--radius-sm);
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Stops the page behind a modal from scrolling */
+.no-scroll {
+  overflow: hidden;
+}
+
+/* Hide on phones only */
+@media (max-width: 639px) {
+  .hide-mobile { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

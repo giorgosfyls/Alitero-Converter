@@ -1,11 +1,11 @@
-# Alitero
+# Alitero.org
 
 **An all-in-one conversion hub that runs entirely in your browser.**
 Pick a tool, drop in your files, get the result. Nothing is uploaded, nothing is installed.
 
 ![Home page, light theme](docs/screenshots/home-light.png)
 
-> **Status:** in active development. The site is not deployed to its own domain yet. The **Image Converter** is fully working today; the other tools are listed in the hub as "coming soon".
+> **Status:** in active development. The site is not deployed to its own domain yet. The **Image Converter** and **Merge PDF** are fully working today; the other tools are listed in the hub as "coming soon".
 
 ---
 
@@ -26,9 +26,18 @@ Pick a tool, drop in your files, get the result. Nothing is uploaded, nothing is
 | :---: | :---: |
 | ![Image converter with finished conversions](docs/screenshots/converter.png) | ![Home page, dark theme](docs/screenshots/home-dark.png) |
 
-| Mobile menu |
-| :---: |
-| <img src="docs/screenshots/mobile-menu.png" alt="Mobile navigation menu" width="300"> |
+| Merge PDF | Mobile menu |
+| :---: | :---: |
+| ![Merge PDF with three files](docs/screenshots/pdf-merge.png) | <img src="docs/screenshots/mobile-menu.png" alt="Mobile navigation menu" width="300"> |
+
+## Merge PDF
+
+Combine up to 30 PDFs (50 MB each, 200 MB total) into a single file, in the order you choose. Reorder by dragging rows or with the arrow buttons. Page counts are shown per file, and password-protected or damaged PDFs are flagged instead of breaking the merge. Everything runs in the browser using the MIT-licensed [pdf-lib](https://pdf-lib.js.org/), vendored in `assets/js/lib/vendor/` so the site still works offline and from `file://`.
+
+```js
+const result = await Alitero.PdfMerge.merge(files, (done, total) => {});
+// result → { blob, name: 'merged.pdf', size, pageCount }
+```
 
 ## The Image Converter
 
@@ -76,6 +85,7 @@ ZIP creation (store-only, with CRC-32) is a separate, dependency-free module: `A
 | Icons | Inline SVG library (`icons.js`), no icon fonts |
 | Font | Inter via Google Fonts |
 | Image processing | Canvas API, `createImageBitmap` |
+| PDF processing | [pdf-lib](https://pdf-lib.js.org/) (vendored, MIT) |
 | Build tools | None |
 
 ## Getting started
@@ -94,6 +104,50 @@ npx serve .
 ```
 
 Then visit the address printed in the terminal.
+
+## Project structure
+
+```
+.
+├── index.html               Home page: tool hub (hero, search, category tabs, grid)
+├── image-converter.html     Image Converter tool page
+├── pdf-merge.html           Merge PDF tool page
+├── contact.html             Contact form
+├── assets/
+│   ├── css/
+│   │   ├── base.css         Design tokens, dark theme, reset
+│   │   ├── layout.css       Header, dropdowns, mobile menu, footer, search modal
+│   │   ├── components.css   Buttons, cards, inputs, toasts
+│   │   ├── home.css         Home page only
+│   │   ├── tool.css         Tool pages only
+│   │   ├── pdf-merge.css    Merge PDF page only
+│   │   └── contact.css      Contact page only
+│   └── js/
+│       ├── core/            Shared by every page
+│       │   ├── theme-init.js    Applies the saved theme before first paint
+│       │   ├── utils.js         Small helpers (escape, format bytes, toast…)
+│       │   ├── tools-data.js    The central tool and category registry
+│       │   ├── icons.js         SVG icon library
+│       │   ├── layout.js        Builds header, footer and search modal
+│       │   ├── theme.js         Light/dark toggle
+│       │   ├── nav.js           Dropdowns and mobile menu
+│       │   ├── search-modal.js  Ctrl/⌘+K search
+│       │   └── config.js        Editable settings (contact email)
+│       ├── converters/
+│       │   ├── image-converter.js   The image conversion engine
+│       │   └── pdf-merge.js         The PDF merge engine
+│       ├── lib/
+│       │   ├── zip.js               Tiny ZIP writer
+│       │   └── vendor/pdf-lib.min.js    Third-party (MIT)
+│       └── pages/               One script per page
+│           ├── home.js
+│           ├── image-converter-page.js
+│           ├── pdf-merge-page.js
+│           └── contact-page.js
+└── docs/screenshots/        Images used in this README
+```
+
+Script order matters (there are no ES modules, so that the site works from `file://`): `utils` → `tools-data` → `icons` → `layout` → `theme` → `nav` → `search-modal` → page script.
 
 ## Adding a new tool
 
@@ -135,7 +189,8 @@ The front end stays static. Image tools run in the browser, as they do today. To
 - [x] Contact page
 - [ ] Compress and Resize Image
 - [ ] PHP backend for the server-side tools
-- [ ] PDF tools: merge, split, compress, PDF to Word
+- [x] Merge PDF (client-side)
+- [ ] PDF tools: split, compress, PDF to Word
 - [ ] Audio and video: MP4 to MP3, video to GIF, converters
 - [ ] Developer tools: JSON to CSV, QR generator
 - [ ] Archives and ebooks: ZIP extractor, EPUB to PDF

@@ -1,0 +1,609 @@
+/* =====================================================================
+   tool.css — Styles shared by all tool pages (image-converter.html ...)
+   ---------------------------------------------------------------------
+   1. Page frame, breadcrumb and title card
+   2. Workspace card and drop zone
+   3. File list
+   4. Settings (format buttons, quality, background)
+   5. Progress, main button and results
+   6. Notices
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. Page frame
+   --------------------------------------------------------------------- */
+.tool-page {
+  padding: 2rem 0 1rem;
+}
+
+.tool-container {
+  max-width: 56rem;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.15s;
+}
+
+.breadcrumb a:hover {
+  color: var(--brand);
+}
+
+.breadcrumb-sep {
+  display: inline-grid;
+  font-size: 0.7rem;
+  color: var(--border-strong);
+}
+
+.breadcrumb-current {
+  font-weight: 700;
+  color: var(--heading);
+}
+
+/* Title card */
+.tool-hero {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+}
+
+/* Soft glow in the corner */
+.tool-hero::after {
+  content: "";
+  position: absolute;
+  right: -2.5rem;
+  bottom: -2.5rem;
+  width: 9rem;
+  height: 9rem;
+  background: var(--brand-soft);
+  border-radius: 50%;
+  filter: blur(24px);
+  pointer-events: none;
+}
+
+.tool-hero-icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  font-size: 1.9rem;
+  color: rgb(var(--tone));
+  background: rgb(var(--tone) / 0.12);
+  border-radius: 18px;
+}
+
+.tool-hero-title {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.tool-hero-lead {
+  position: relative;
+  z-index: 1;
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------------
+   2. Workspace and drop zone
+   --------------------------------------------------------------------- */
+.workspace {
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+@media (min-width: 640px) {
+  .workspace { padding: 2rem; }
+}
+
+/* Highlight while files are dragged over the page card */
+.workspace.is-dragover {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px var(--brand-soft), var(--shadow-lg);
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  background: var(--bg);
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.dropzone:hover,
+.dropzone:focus-visible,
+.workspace.is-dragover .dropzone {
+  background: var(--brand-soft);
+  border-color: var(--brand);
+}
+
+.dropzone-icon {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--brand);
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s;
+}
+
+.dropzone:hover .dropzone-icon {
+  transform: scale(1.08);
+}
+
+.dropzone-title {
+  margin-bottom: 0.25rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.dropzone-sub {
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.dropzone-hint {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--faint);
+}
+
+/* ---------------------------------------------------------------------
+   3. File list
+   --------------------------------------------------------------------- */
+.list-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.list-head-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.count-pill {
+  padding: 0.1rem 0.6rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--brand);
+  background: var(--brand-soft);
+  border-radius: 999px;
+}
+
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 26rem;
+  overflow-y: auto;
+  padding: 0.1rem;
+}
+
+.file-item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.file-item.is-done  { border-color: var(--success-soft); }
+.file-item.is-error { border-color: var(--danger-border); background: var(--danger-soft); }
+
+.file-thumb {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  background:
+    repeating-conic-gradient(var(--border) 0% 25%, transparent 0% 50%) 50% / 12px 12px;
+  border-radius: 10px;
+}
+
+.file-info {
+  min-width: 0;
+}
+
+.file-name {
+  overflow: hidden;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--heading);
+}
+
+.file-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.file-error {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--danger);
+}
+
+/* Status and buttons: below the text on phones, to the right on wide screens */
+.file-side {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.file-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .file-item {
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+  }
+  .file-side {
+    grid-column: auto;
+    justify-content: flex-end;
+  }
+}
+
+.file-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--faint);
+}
+
+.file-status.is-working { color: var(--brand); }
+.file-status.is-error   { color: var(--danger); }
+.file-status.is-done    { color: var(--success); }
+
+.size-change {
+  padding: 0.05rem 0.45rem;
+  font-size: 0.6875rem;
+  border-radius: 999px;
+}
+.size-change.is-smaller { color: var(--success); background: var(--success-soft); }
+.size-change.is-bigger  { color: var(--muted);   background: var(--bg-alt); }
+
+.icon-btn-sm {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+
+.icon-btn-sm:hover:not(:disabled) {
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+
+/* ---------------------------------------------------------------------
+   4. Settings
+   --------------------------------------------------------------------- */
+.settings {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.settings .section-title {
+  margin-bottom: 1rem;
+}
+
+.field + .field,
+.settings-row {
+  margin-top: 1.25rem;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.field-label strong {
+  margin-left: 0.4rem;
+  color: var(--brand);
+}
+
+.field-hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.settings-row {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .settings-row { grid-template-columns: 1fr 1fr; }
+}
+
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Format buttons: a row of selectable tiles built from radio inputs */
+.format-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+@media (min-width: 640px) {
+  .format-group { grid-template-columns: repeat(5, 1fr); }
+}
+
+.format-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem 0.85rem;
+  cursor: pointer;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+}
+
+.format-option:hover {
+  border-color: var(--border-strong);
+}
+
+/* The real radio input is hidden; the tile itself shows the state */
+.format-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.format-option:has(input:checked) {
+  background: var(--brand-soft);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-soft);
+}
+
+.format-option:has(input:focus-visible) {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.format-name {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  color: var(--heading);
+}
+
+.format-option:has(input:checked) .format-name {
+  color: var(--brand);
+}
+
+.format-note {
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.format-option.is-unsupported {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ---------------------------------------------------------------------
+   5. Progress, main button and results
+   --------------------------------------------------------------------- */
+.progress-wrap {
+  margin-top: 1.25rem;
+}
+
+.progress {
+  height: 8px;
+  overflow: hidden;
+  background: var(--bg-alt);
+  border-radius: 999px;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #f43f5e, #e11d48);
+  border-radius: inherit;
+  transition: width 0.25s;
+}
+
+.progress-text {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--muted);
+}
+
+.progress-text:empty {
+  display: none;
+}
+
+.action-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.action-row .btn {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .action-row .btn { width: auto; min-width: 18rem; }
+}
+
+.results-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--success-soft);
+  border: 1px solid var(--success-soft);
+  border-radius: var(--radius-lg);
+}
+
+.results-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  color: #fff;
+  background: #059669;
+  border-radius: 50%;
+}
+
+.results-summary {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 10rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.results-summary strong {
+  font-size: 0.9375rem;
+  color: var(--heading);
+}
+
+@media (max-width: 639px) {
+  .results-bar .btn { width: 100%; }
+}
+
+.privacy-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--muted);
+}
+
+.privacy-note [data-icon] {
+  display: inline-grid;
+  color: var(--success);
+}
+
+/* ---------------------------------------------------------------------
+   6. Notices (skipped files)
+   --------------------------------------------------------------------- */
+.notice {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.8125rem;
+  color: var(--text);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius);
+}
+
+.notice-icon {
+  display: grid;
+  flex: none;
+  font-size: 1.2rem;
+  color: var(--danger);
+}
+
+.notice strong {
+  color: var(--heading);
+}
+
+.notice ul {
+  margin-top: 0.25rem;
+}
+
+.notice-name {
+  font-weight: 700;
+  color: var(--heading);
+}

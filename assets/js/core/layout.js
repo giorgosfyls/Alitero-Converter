@@ -59,7 +59,7 @@
     return '' +
       '<div class="announce">' +
         '<span class="announce-inner">' + icon('sparkles') +
-          '<span>New: the <strong>Image Converter</strong> is live. More tools are on the way!</span>' +
+          '<span>New: <strong>Merge PDF</strong> and the <strong>Image Converter</strong> are live. More tools are on the way!</span>' +
         '</span>' +
       '</div>';
   }
